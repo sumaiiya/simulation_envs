@@ -5,119 +5,117 @@ import sys
 from pathlib import Path
 import sqlite3
 
-#Replace this name for the desired name.
-DATABASE_NAME = 'test_species.sqlite3'
+def main():
+    if len(sys.argv) != 2:
+        print("Usage: python create_db.py <database_name>")
+        sys.exit(1)
 
-#by default, the sqlite3 file is stored in /files/dbs
-DATABASE_FOLDER = sys.path.append(os.path.join(Path(os.getcwd()).parents[1], 'files', 'dbs'))
+    database_name = sys.argv[1]
 
-con = sqlite3.connect(os.path.join(databaseFolder, databaseName))
+    # Define the default folder to store the sqlite3 file
+    database_folder = Path(__file__).resolve().parents[1] / 'files' / 'dbs'
+    #database_folder.mkdir(parents=True, exist_ok=True)  # create folder if it doesn't exist
 
-cur = con.cursor()
+    database_path = database_folder / database_name
+    con = sqlite3.connect(database_path)
+    cur = con.cursor()
 
+    cur.execute("""
+    CREATE TABLE IF NOT EXISTS elements (
+        id TEXT PRIMARY KEY NOT NULL UNIQUE,
+        name TEXT NOT NULL UNIQUE,
+        MolecularWeight REAL NOT NULL
+    )""")
 
-elements = """
-CREATE TABLE IF NOT EXISTS  elements (
-id TEXT PRIMARY KEY NOT NULL UNIQUE,
-name TEXT NOT NULL UNIQUE,
-MolecularWeight REAL NOT NULL)"""
+    cur.execute("""
+    CREATE TABLE IF NOT EXISTS metabolites (
+        id TEXT PRIMARY KEY NOT NULL UNIQUE,
+        color TEXT NOT NULL,
+        MolecularWeight REAL NOT NULL
+    )""")
 
-cur.execute(elements)
+    cur.execute("""
+    CREATE TABLE IF NOT EXISTS metabolites2elements (
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        metabolite TEXT NOT NULL,
+        element TEXT NOT NULL,
+        atoms INTEGER NOT NULL,
+        FOREIGN KEY (metabolite) REFERENCES metabolites (id),
+        FOREIGN KEY (element) REFERENCES elements (id)
+    )""")
 
-metabolites = """
-CREATE TABLE IF NOT EXISTS  metabolites (
-id TEXT PRIMARY KEY NOT NULL UNIQUE,
-color TEXT NOT NULL,
-MolecularWeight REAL NOT NULL)"""
-cur.execute(metabolites)
+    cur.execute("""
+    CREATE TABLE IF NOT EXISTS wc (
+        metabolite TEXT PRIMARY KEY UNIQUE,
+        concentration REAL NOT NULL,
+        FOREIGN KEY (metabolite) REFERENCES metabolites (id)
+    )""")
 
-metabolites2elements = """
-CREATE TABLE IF NOT EXISTS  metabolites2elements (
-id INTEGER PRIMARY KEY AUTOINCREMENT,
-metabolite TEXT NOT NULL,
-element TEXT NOT NULL,
-atoms INTEGER NOT NULL,
-FOREIGN KEY (metabolite) REFERENCES metabolites (id),
-FOREIGN KEY (element) REFERENCES elements (id))
-"""
-cur.execute(metabolites2elements)
+    cur.execute("""
+    CREATE TABLE IF NOT EXISTS species (
+        id TEXT PRIMARY KEY UNIQUE,
+        name TEXT NOT NULL,
+        genomeSize INTEGER,
+        geneNumber INTEGER,
+        patricID TEXT,
+        ncbiID TEXT
+    )""")
 
-wc = """
-CREATE TABLE IF NOT EXISTS  wc (
-metabolite TEXT PRIMARY KEY UNIQUE,
-concentration REAL NOT NULL,
-FOREIGN KEY (metabolite) REFERENCES metabolites (id))
-"""
-cur.execute(wc)
+    cur.execute("""
+    CREATE TABLE IF NOT EXISTS feedingTerms (
+        id TEXT PRIMARY KEY UNIQUE,
+        name TEXT NOT NULL,
+        species TEXT NOT NULL,
+        FOREIGN KEY (species) REFERENCES species (id)
+    )""")
 
+    cur.execute("""
+    CREATE TABLE IF NOT EXISTS feedingTerms2metabolites (
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        feedingTerm TEXT NOT NULL,
+        metabolite TEXT NOT NULL,
+        yield REAL NOT NULL,
+        monodK REAL NOT NULL,
+        FOREIGN KEY (feedingTerm) REFERENCES feedingTerms (id),
+        FOREIGN KEY (metabolite) REFERENCES metabolites (id)
+    )""")
 
-species = """
-CREATE TABLE IF NOT EXISTS  species (
-id TEXT PRIMARY KEY UNIQUE,
-name TEXT NOT NULL,
-genomeSize INTEGER,
-geneNumber INTEGER,
-patricID TEXT,
-ncbiID TEXT)
-"""
-cur.execute(species)
+    cur.execute("""
+    CREATE TABLE IF NOT EXISTS subpopulations (
+        id TEXT PRIMARY KEY UNIQUE,
+        species TEXT NOT NULL,
+        mumax REAL NOT NULL,
+        pHoptimal REAL NOT NULL,
+        pHalpha REAL NOT NULL,
+        count REAL NOT NULL,
+        color TEXT NOT NULL,
+        state TEXT NOT NULL,
+        FOREIGN KEY (species) REFERENCES species (id)
+    )""")
 
-feedingTerms = """
-CREATE TABLE IF NOT EXISTS  feedingTerms (
-id TEXT PRIMARY KEY UNIQUE,
-name TEXT NOT NULL,
-species TEXT NOT NULL,
-FOREIGN KEY (species) REFERENCES species (id))
-"""
-cur.execute(feedingTerms)
+    cur.execute("""
+    CREATE TABLE IF NOT EXISTS subpopulations2feedingTerms (
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        subpopulation TEXT NOT NULL,
+        feedingTerm TEXT NOT NULL,
+        FOREIGN KEY (subpopulation) REFERENCES subpopulations (id),
+        FOREIGN KEY (feedingTerm) REFERENCES feedingTerms (id)
+    )""")
 
-feedingTerms2metabolites = """
-CREATE TABLE IF NOT EXISTS  feedingTerms2metabolites (
-id INTEGER PRIMARY KEY AUTOINCREMENT,
-feedingTerm TEXT NOT NULL,
-metabolite TEXT NOT NULL,
-yield REAL NOT NULL,
-monodK REAL NOT NULL,
-FOREIGN KEY (feedingTerm) REFERENCES feedingTerms (id),
-FOREIGN KEY (metabolite) REFERENCES metabolites (id))
-"""
-cur.execute(feedingTerms2metabolites)
+    cur.execute("""
+    CREATE TABLE IF NOT EXISTS subpopulations2subpopulations (
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        subpopulation_A TEXT NOT NULL,
+        subpopulation_B TEXT NOT NULL,
+        hillFunc TEXT NOT NULL,
+        rate REAL NOT NULL,
+        FOREIGN KEY (subpopulation_A) REFERENCES subpopulations (id),
+        FOREIGN KEY (subpopulation_B) REFERENCES subpopulations (id)
+    )""")
 
-subpopulations = """
-CREATE TABLE IF NOT EXISTS  subpopulations (
-id TEXT PRIMARY KEY UNIQUE,
-species TEXT NOT NULL,
-mumax REAL NOT NULL,
-pHoptimal REAL NOT NULL,
-pHalpha REAL NOT NULL,
-count REAL NOT NULL,
-color TEXT NOT NULL,
-state TEXT NOT NULL,
-FOREIGN KEY (species) REFERENCES species (id))
-"""
-cur.execute(subpopulations)
+    con.commit()
+    con.close()
+    print(f"Database created successfully at: {database_path}")
 
-subpopulations2feedingTerms = """
-CREATE TABLE IF NOT EXISTS  subpopulations2feedingTerms (
-id INTEGER PRIMARY KEY AUTOINCREMENT,
-subpopulation TEXT NOT NULL,
-feedingTerm TEXT NOT NULL,
-FOREIGN KEY (subpopulation) REFERENCES subpopulations (id),
-FOREIGN KEY (feedingTerm) REFERENCES feedingTerms (id))
-"""
-cur.execute(subpopulations2feedingTerms)
-
-subpopulations2subpopulations = """
-CREATE TABLE IF NOT EXISTS  subpopulations2subpopulations (
-id INTEGER PRIMARY KEY AUTOINCREMENT,
-subpopulation_A TEXT NOT NULL,
-subpopulation_B TEXT NOT NULL,
-hillFunc TEXT NOT NULL,
-rate REAL NOT NULL,
-FOREIGN KEY (subpopulation_A) REFERENCES subpopulations (id),
-FOREIGN KEY (subpopulation_B) REFERENCES subpopulations (id))
-"""
-cur.execute(subpopulations2subpopulations)
-
-
-con.commit()
+if __name__ == "__main__":
+    main()
