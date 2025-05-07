@@ -17,6 +17,7 @@ def main():
     #database_folder.mkdir(parents=True, exist_ok=True)  # create folder if it doesn't exist
 
     database_path = database_folder / database_name
+    print(database_path)
     con = sqlite3.connect(database_path)
     cur = con.cursor()
 
