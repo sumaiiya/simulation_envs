@@ -1,0 +1,8 @@
+id	feedingTerm	metabolite	yield	monodK
+1	x_a_sucrose	sucrose	1	2
+2	x_b_glucose	glucose	4.50E-01	2
+3	x_b_fructose	fructose	0.45	2
+4	x_c_glucose	glucose	0.4	2
+5	x_c_fructose	fructose	0.4	2
+6	x_d_ethanol	ethanol	1	2
+7	x_d_acetate	acetate	1	2
