@@ -13,12 +13,12 @@ def main():
     database_name = sys.argv[1]
 
     # Define the default folder to store the sqlite3 file
-    database_folder = Path(__file__).resolve().parents[2] / 'files' / 'dbs'
+    #database_folder = Path(__file__).resolve().parents[2] / 'files' / 'dbs'
     #database_folder.mkdir(parents=True, exist_ok=True)  # create folder if it doesn't exist
 
-    database_path = database_folder / database_name
-    print(database_path)
-    con = sqlite3.connect(database_path)
+    #database_path = database_folder / database_name
+    print(database_name)
+    con = sqlite3.connect(database_name)
     cur = con.cursor()
 
     cur.execute("""
