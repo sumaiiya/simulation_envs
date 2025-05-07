@@ -13,7 +13,7 @@ def main():
     database_name = sys.argv[1]
 
     # Define the default folder to store the sqlite3 file
-    database_folder = Path(__file__).resolve().parents[1] / 'files' / 'dbs'
+    database_folder = Path(__file__).resolve().parents[2] / 'files' / 'dbs'
     #database_folder.mkdir(parents=True, exist_ok=True)  # create folder if it doesn't exist
 
     database_path = database_folder / database_name
