@@ -46,7 +46,7 @@ def main():
     )""")
 
     cur.execute("""
-    CREATE TABLE IF NOT EXISTS wc (
+    CREATE TABLE IF NOT EXISTS kombucha_media (
         metabolite TEXT PRIMARY KEY UNIQUE,
         concentration REAL NOT NULL,
         FOREIGN KEY (metabolite) REFERENCES metabolites (id)
