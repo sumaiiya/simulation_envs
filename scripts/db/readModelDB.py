@@ -97,7 +97,7 @@ def createSubpopulation(db, supopulationID, mediaName):
 
 @db_session()
 def createBacteria(db, speciesID, mediaName):
-    colors = {'bt':'#ff8300', 'ri':'#00b8ff', 'bh':'#FF10F0'}
+    colors = {'bac':'#ff8300', 'yes':'#00b8ff'}
     
     subpops = [createSubpopulation(db, i[0], mediaName) for i in query_value(db, 'subpopulations', 'species', speciesID)]
     spopsD = {i.name:i for i in subpops}
