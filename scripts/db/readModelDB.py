@@ -93,8 +93,10 @@ def createFeedingTerm(db, feedingTermID, mediaName):
     
     # Ensure metabolites are properly added to the term
     for i in metabolome.metabolites:
-        if i not in term:  # Check if the metabolite name is not already in the dictionary
-            term[i] = (0, 0)
+        print(f"Processing metabolite: {i.name}")  # Add the print statement here
+        if i.name not in term:  # Check if the metabolite name is not already in the dictionary
+            print(f"Adding metabolite: {i.name}")  # Debug when adding a new metabolite
+            term[i.name] = (0, 0)
 
     return FeedingTerm(id=feedingTermID, metDict=term)
 
