@@ -1,7 +1,7 @@
-import os
 import sqlite3
-from sqlite3 import Error
+import os
 import chardet
+import sys
 
 def create_connection(db_file):
     """Create a database connection to the SQLite database"""
@@ -9,7 +9,7 @@ def create_connection(db_file):
         conn = sqlite3.connect(db_file)
         print(f"Connected to database: {db_file}")
         return conn
-    except Error as e:
+    except sqlite3.Error as e:
         print(e)
         return None
 
@@ -79,11 +79,15 @@ def addFile(conn, filePath, tableName):
                 print(f"[Line {line_number}] Error inserting line: {a}")
                 print(e)
 
-
 def main():
-    base_folder = "/content/simulation_envs/files/db_tables"
-    db_file = os.path.join(base_folder, "kombuchaDB.sqlite3")
+    # Get the database file path from the command-line argument
+    if len(sys.argv) != 2:
+        print("Usage: python load_data.py <db_file_path>")
+        return
 
+    db_file = sys.argv[1]
+    
+    base_folder = "/content/simulation_envs/files/db_tables"
     conn = create_connection(db_file)
     if conn is None:
         return
@@ -93,7 +97,7 @@ def main():
         "elements.tsv": "elements",
         "metabolites.tsv": "metabolites",
         "metabolites2elements.tsv": "metabolites2elements",
-        "kombucha_media.tsv": "wc",
+        "kombucha_media.tsv": "kombucha_media",
         "species.tsv": "species",
         "feedingTerms.tsv": "feedingTerms",
         "feedingTerms2metabolites.tsv": "feedingTerms2metabolites",
