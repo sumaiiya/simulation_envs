@@ -71,7 +71,7 @@ def createMetabolome(db, mediaName, pH0=6.4, pHFunc=None):
     return Metabolome(metabolites = metObjs, pH = pH0, pHFunc = pHFunc)
 
 
-"""
+
 @db_session()
 def createFeedingTerm(db, feedingTermID, mediaName):
     metabolites = query_string(db, 'feedingTerms2metabolites', 'feedingTerm', feedingTermID)
@@ -82,8 +82,8 @@ def createFeedingTerm(db, feedingTermID, mediaName):
             term[i] = (0,0)
     
     return FeedingTerm(id = feedingTermID, metDict = term)
-"""
 
+"""
 @db_session()
 def createFeedingTerm(db, feedingTermID, mediaName):
     metabolites = query_string(db, 'feedingTerms2metabolites', 'feedingTerm', feedingTermID)
@@ -97,7 +97,7 @@ def createFeedingTerm(db, feedingTermID, mediaName):
     
     return FeedingTerm(id = feedingTermID, metDict = term)
 
-
+"""
 
 @db_session()
 def createSubpopulation(db, supopulationID, mediaName):
