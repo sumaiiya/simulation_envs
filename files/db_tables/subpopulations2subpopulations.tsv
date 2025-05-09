@@ -1,5 +1,5 @@
 id	subpopulation_A	subpopulation_B	hillFunc	rate
-1	xa	xb	""""""	0.0250945181446201
-2	xb	xa	""""""	1.5
-3	xc	xd	""""""	1.00000001089118e-05
-4	xd	xc	""""""	0.296037454250935
+1	xa	xb	"lambda metObj: 1.0"	0.0250945181446201
+2	xb	xa	"lambda metObj: 1.0"	1.5
+3	xc	xd	"lambda metObj: 1.0"	1.00000001089118e-05
+4	xd	xc	"lambda metObj: 1.0"	0.296037454250935
