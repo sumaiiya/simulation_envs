@@ -89,13 +89,15 @@ def createFeedingTerm(db, feedingTermID, mediaName):
     metabolites = query_string(db, 'feedingTerms2metabolites', 'feedingTerm', feedingTermID)
     metabolome = createMetabolome(db, mediaName)
     
-    term = {i[2]:(i[3], i[4]) for i in metabolites}  # i[2] is metabolite name
+    term = {i[2]: (i[3], i[4]) for i in metabolites}  # i[2] is metabolite name
     
+    # Ensure metabolites are properly added to the term
     for i in metabolome.metabolites:
-    if i not in term:  # Check if the metabolite name is not already in the dictionary
-        term[i] = (0, 0)
+        if i not in term:  # Check if the metabolite name is not already in the dictionary
+            term[i] = (0, 0)
 
-    return FeedingTerm(id = feedingTermID, metDict = term)
+    return FeedingTerm(id=feedingTermID, metDict=term)
+
 
 
 
