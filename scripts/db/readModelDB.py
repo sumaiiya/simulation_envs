@@ -71,7 +71,7 @@ def createMetabolome(db, mediaName, pH0=6.4, pHFunc=None):
     return Metabolome(metabolites = metObjs, pH = pH0, pHFunc = pHFunc)
 
 
-"""
+
 @db_session()
 def createFeedingTerm(db, feedingTermID, mediaName):
     metabolites = query_string(db, 'feedingTerms2metabolites', 'feedingTerm', feedingTermID)
@@ -82,28 +82,6 @@ def createFeedingTerm(db, feedingTermID, mediaName):
             term[i] = (0,0)
     
     return FeedingTerm(id = feedingTermID, metDict = term)
-
-"""
-@db_session()
-def createFeedingTerm(db, feedingTermID, mediaName):
-    metabolites = query_string(db, 'feedingTerms2metabolites', 'feedingTerm', feedingTermID)
-    metabolome = createMetabolome(db, mediaName)
-    
-    # Create the initial term dictionary using metabolite names as keys
-    term = {i[2]: (i[3], i[4]) for i in metabolites}  # i[2] is metabolite name
-    
-    # Ensure metabolites are properly added to the term
-    for i in metabolome.metabolites:
-        # If metabolome.metabolites contains metabolite names as strings
-        if i not in term:  # Check if the metabolite name is not already in the dictionary
-            print(f"Adding metabolite: {i}")  # Debug when adding a new metabolite
-            term[i] = (0, 0)
-
-    return FeedingTerm(id=feedingTermID, metDict=term)
-
-
-
-
 
 @db_session()
 def createSubpopulation(db, supopulationID, mediaName):
