@@ -81,13 +81,13 @@ def addFile(conn, filePath, tableName):
 
 def main():
     # Get the database file path from the command-line argument
-    if len(sys.argv) != 2:
-        print("Usage: python load_data.py <db_file_path>")
+    if len(sys.argv) != 3:
+        print("Usage: python load_data.py <db_file_path> <table_paths>")
         return
 
     db_file = sys.argv[1]
     
-    base_folder = "/content/simulation_envs/files/db_tables"
+    base_folder = sys.argv[2]#"/content/simulation_envs/files/db_tables"
     conn = create_connection(db_file)
     if conn is None:
         return

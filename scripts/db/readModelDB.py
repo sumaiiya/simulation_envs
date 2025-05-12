@@ -98,7 +98,7 @@ def createBacteria(db, speciesID, mediaName):
     
     subpops = [createSubpopulation(db, i[0], mediaName) for i in query_value(db, 'subpopulations', 'species', speciesID)]
     spopsD = {i.name:i for i in subpops}
-    color = query_value(db, 'species', 'color', speciesID)
+    color = query_value(db, 'species', 'id', speciesID)[0][6]
     transitions = {}
     for i in spopsD:
         transition = query_value(db, "subpopulations2subpopulations", "subpopulation_A", i)
