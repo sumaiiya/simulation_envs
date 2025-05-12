@@ -2,7 +2,7 @@ id	subpopulation	feedingTerm
 1	xa	x_a_sucrose
 2	xb	x_b_glucose
 3	xb	x_b_fructose
-4	xc	x_c_glucose
-5	xc	x_c_fructose
-6	xd	x_d_ethanol
-7	xd	x_d_acetate
+4	xd	x_c_glucose
+5	xd	x_c_fructose
+6	xe	x_d_ethanol
+7	xe	x_d_acetate
