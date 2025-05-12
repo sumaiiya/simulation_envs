@@ -1,8 +1,2 @@
 id	name	species
-x_a_sucrose	bac sucrose	bac
-x_b_glucose	bac glucose	bac
-x_b_fructose	bac fructose	bac
-x_c_glucose	yes glucose	yes
-x_c_fructose	yes fructose	yes
-x_d_ethanol	yes ethanol	yes
-x_d_acetate	yes acetate	yes
+bb1_sucrose	bac sucrose	bb
