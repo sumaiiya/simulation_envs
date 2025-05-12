@@ -94,11 +94,11 @@ def createSubpopulation(db, supopulationID, mediaName):
 
 @db_session()
 def createBacteria(db, speciesID, mediaName):
-    colors = {'bac':'#ff8300', 'yes':'#00b8ff'}
+    #colors = {'bac':'#ff8300', 'yes':'#00b8ff'}
     
     subpops = [createSubpopulation(db, i[0], mediaName) for i in query_value(db, 'subpopulations', 'species', speciesID)]
     spopsD = {i.name:i for i in subpops}
-    
+    color = query_value(db, 'species', 'color', speciesID)
     transitions = {}
     for i in spopsD:
         transition = query_value(db, "subpopulations2subpopulations", "subpopulation_A", i)
@@ -109,7 +109,7 @@ def createBacteria(db, speciesID, mediaName):
             transitions[i] = relations
         else:
             transitions[i] = []
-    return Bacteria(speciesID, spopsD, transitions, color = colors[speciesID])
+    return Bacteria(speciesID, spopsD, transitions, color = color)
 
 
 # import os

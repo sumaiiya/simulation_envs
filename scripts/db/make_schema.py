@@ -59,7 +59,8 @@ def main():
         genomeSize INTEGER,
         geneNumber INTEGER,
         patricID TEXT,
-        ncbiID TEXT
+        ncbiID TEXT,
+	color
     )""")
 
     cur.execute("""
