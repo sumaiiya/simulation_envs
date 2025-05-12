@@ -3,4 +3,5 @@ bb1	bb	0.5	7	50	0.01	#FF10F0	active
 bb2	bb	0.4	7	50	0.01	#FF10F0	active
 bb6	bb	0.0	7	50	0.00	#FF10F0	dead
 ki1	ki	0.5	7	50	0.01	#FF10F0	active
+ki2	ki	0.04	7	50	0.01	#FF10F0	active
 

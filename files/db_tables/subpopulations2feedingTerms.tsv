@@ -3,7 +3,9 @@ id	subpopulation	feedingTerm
 2	bb2	bb2_glucose
 3	bb2	bb2_fructose
 4	bb2	bb2_ethanol
-5	bb3	bb3_ethanol
-6	bb4	bb4_glucose
-7	bb4	bb4_fructose
+5	ki1	ki1_ethanol
+6	ki1	ki1_acetate
+7	ki2	ki2_glucose
+8	ki2	ki2_fructose
+9	ki2	ki2_acetate
 
