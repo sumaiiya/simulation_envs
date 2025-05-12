@@ -1,4 +1,4 @@
 id	subpopulation_A	subpopulation_B	hillFunc	rate
 1	bb1	bb6	""	0.001
-2	bb1	bb2	(1/(1 + (metObj.metD['sucrose'].concentration**1.0))) * (metObj.metD['glucose'].concentration**1/(metObj.metD['glucose'].concentration**1 + 1))	0.01
+2	bb1	bb2	(metObj.metD['sucrose'].concentration<0.5) and ((metObj.metD['glucose'].concentration>1) or (metObj.metD['fructose'].concentration>1))	0.01
 
