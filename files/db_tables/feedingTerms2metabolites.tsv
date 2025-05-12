@@ -5,3 +5,10 @@ id	feedingTerm	metabolite	yield	monodK
 4	bb2_glucose	glucose	1	1
 5	bb2_fructose	fructose	1	1
 6	bb2_ethanol	ethanol	-1	1
+7	bb3_ethanol	ethanol	1	1
+8	bb3_ethanol	acetate	-1	1
+9	bb4_glucose	glucose	1	1
+10	bb4_glucose	acetate	-1	1
+11	bb4_fructose	fructose	1	1
+12	bb4_fructose	acetate	-1	1	
+
