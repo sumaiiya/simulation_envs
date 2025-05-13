@@ -321,31 +321,7 @@
                 
             return metabolism
 
-    """    
-        def __getIntrGrowth(self):
-            def gr(metObj):
-                growth = 0
-                if hasattr(self, 'feedingTerms') and self.feedingTerms:
-                    for fterm in self.feedingTerms:
-                        metab_contribution = fterm.intrinsicGrowth(metObj)
-                        if metab_contribution > 0:
-                            growth += metab_contribution
-                return self.mumax * self.count * growth
-            return gr
-
-        def __getIntrMetabolism(self):
-            def metabolism(metObj):
-                metabV = np.zeros(metObj.nmets)
-                if hasattr(self, 'feedingTerms') and self.feedingTerms:
-                    for fterm in self.feedingTerms:
-                        metab_vector = fterm.intrinsicMetabolism(metObj)
-                        if np.any(metab_vector):
-                            metabV += metab_vector
-                    return self.mumax * self.count * metabV
-                else:
-                    return metabV
-            return metabolism
-    """
+  
 
         @staticmethod
         def gammaD(x, alpha, beta):
@@ -404,29 +380,7 @@
                     
             return growth
        
-    """
-        def growth(self, metObj):
-            growth = {subP: 0 for subP in self.subpopulations}
-            for subP in self.subpopulations:
-                pop = self.subpopulations[subP]
-             
-                intrinsic = pop.intrinsicGrowth(metObj)
-                if intrinsic > 0:
-                    growth[subP] += intrinsic * pop.pHSensitivity(metObj.pH)
-                
-                for connection in self.connections.get(subP, []):
-                    target_subP = connection[0]
-                    condition_fn = connection[1]
-                    transition_factor = connection[2]
-
-                   
-                    if condition_fn(metObj) > 0:
-                        transition = pop.count * condition_fn(metObj) * transition_factor
-                        growth[target_subP] += transition
-                        growth[subP] -= transition
-
-            return growth
-    """
+    
         def metabolism(self, metObj):
             metV = np.zeros(metObj.nmets)
             
