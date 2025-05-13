@@ -323,18 +323,16 @@ class Subpopulation:
     """   
     def __getIntrGrowth(self):
         def gr(metObj):
-        growth = 0
+            growth = 0
         if hasattr(self, 'feedingTerms') and self.feedingTerms:
             for fterm in self.feedingTerms:
                 metab_contribution = fterm.intrinsicGrowth(metObj)
                 if metab_contribution > 0:
                     growth += metab_contribution
         return self.mumax * self.count * growth
+    return gr
 
-        return gr
-
-
-    def __getIntrMetabolism(self):  
+    def __getIntrMetabolism(self):
         def metabolism(metObj):
             metabV = np.zeros(metObj.nmets)
             if hasattr(self, 'feedingTerms') and self.feedingTerms:
@@ -346,6 +344,7 @@ class Subpopulation:
             else:
                 return metabV
         return metabolism
+
 
 
     @staticmethod
