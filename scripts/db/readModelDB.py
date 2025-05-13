@@ -26,7 +26,7 @@ def getTransitionFunction(statement):
     def tf(metObj):
         if statement == '""':
             return 1.0
-        return eval(statement)
+        return float(eval(statement))
     return tf
 
 
