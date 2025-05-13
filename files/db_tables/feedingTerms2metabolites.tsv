@@ -9,7 +9,7 @@ id	feedingTerm	metabolite	yield	monodK
 8	ki1_ethanol	ethanol	1	1
 9	ki1_ethanol	acetate	-1	1
 10	ki2_glucose	glucose	1	1
-11	ki2_glucose	acetate	-1	1
+11	ki1_glucose	acetate	-1	1
 12	ki2_fructose	fructose	1	1
 13	ki2_fructose	acetate	-1	1	
 
