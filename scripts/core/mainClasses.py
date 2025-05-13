@@ -330,7 +330,9 @@ class Subpopulation:
                 if metab_contribution > 0:
                     growth += metab_contribution
         return self.mumax * self.count * growth
+
     return gr
+
 
 
     def __getIntrMetabolism(self):  
