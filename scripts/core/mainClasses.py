@@ -296,14 +296,10 @@ class Subpopulation:
         
         return pHSensitivity
 
-    
+    """
     def __getIntrGrowth(self):
         def gr(metObj):
             growth = 0
-            #checking if no feeding term then return 0
-            if not self.feedingTerms:
-                return 0
-                
             for fterm in self.feedingTerms:
                 growth += fterm.intrinsicGrowth(metObj)
             
@@ -315,9 +311,6 @@ class Subpopulation:
         def metabolism(metObj):
             
             metabV = np.zeros(metObj.nmets)
-            #added to check the feeding term
-            if not self.feedingTerms:
-                return 0
             
             for fterm in self.feedingTerms:
                 metabV += fterm.intrinsicMetabolism(metObj)
@@ -327,17 +320,36 @@ class Subpopulation:
             
         
         return metabolism
-    
+    """
+    def getIntrGrowth(self):
+    def gr(metObj):
+        growth = 0
+        if hasattr(self, 'feedingTerms') and self.feedingTerms:
+            for fterm in self.feedingTerms:
+                metab_contribution = fterm.intrinsicGrowth(metObj)
+                if metab_contribution > 0:
+                    growth += metab_contribution
+            return self.mumax * self.count * growth
+        else:
+            return 0
+    return gr
+
+def getIntrMetabolism(self):
+    def metabolism(metObj):
+        metabV = np.zeros(metObj.nmets)
+        if hasattr(self, 'feedingTerms') and self.feedingTerms:
+            for fterm in self.feedingTerms:
+                metab_vector = fterm.intrinsicMetabolism(metObj)
+                if np.any(metab_vector):
+                    metabV += metab_vector
+            return self.mumax * self.count * metabV
+        else:
+            return metabV
+    return metabolism
 
     @staticmethod
     def gammaD(x, alpha, beta):
         return np.exp(alpha*np.log(beta) - gammaln(alpha) + (alpha-1)*np.log(x) - beta*x)
-        
-
-    
-        
-
-
 
 class Bacteria:
     def __init__(self, species: str, subpopulations: dict, connections : dict, color = '#54f542'):
