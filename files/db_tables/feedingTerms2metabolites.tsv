@@ -1,5 +1,5 @@
 id	feedingTerm	metabolite	yield	monodK
-1	bb1_sucrose	sucrose	0	0
+1	bb1_sucrose	sucrose	1	1
 2	bb1_sucrose	glucose	-1	1
 3	bb1_sucrose	fructose	-1	1
 4	bb2_glucose	glucose	1	1
