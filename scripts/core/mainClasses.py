@@ -318,7 +318,7 @@ class Subpopulation:
             return self.mumax*self.count*metabV
             #return self.count*metabV
             
-        
+            
         return metabolism
     """   
     def __getIntrGrowth(self):
@@ -330,21 +330,21 @@ class Subpopulation:
                     if metab_contribution > 0:
                         growth += metab_contribution
             return self.mumax * self.count * growth
-    return gr
+        return gr
 
+    def __getIntrMetabolism(self):
+        def metabolism(metObj):
+            metabV = np.zeros(metObj.nmets)
+            if hasattr(self, 'feedingTerms') and self.feedingTerms:
+                for fterm in self.feedingTerms:
+                    metab_vector = fterm.intrinsicMetabolism(metObj)
+                    if np.any(metab_vector):
+                        metabV += metab_vector
+                return self.mumax * self.count * metabV
+            else:
+                return metabV
+        return metabolism
 
-  def __getIntrMetabolism(self):
-    def metabolism(metObj):
-        metabV = np.zeros(metObj.nmets)
-        if hasattr(self, 'feedingTerms') and self.feedingTerms:
-            for fterm in self.feedingTerms:
-                metab_vector = fterm.intrinsicMetabolism(metObj)
-                if np.any(metab_vector):
-                    metabV += metab_vector
-            return self.mumax * self.count * metabV
-        else:
-            return metabV
-    return metabolism
 
     @staticmethod
     def gammaD(x, alpha, beta):
