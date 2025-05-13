@@ -323,7 +323,7 @@ class Subpopulation:
     """
     def __getIntrGrowth(self):
         def gr(metObj):
-        growth = 0
+            growth = 0
         if hasattr(self, 'feedingTerms') and self.feedingTerms:
             for fterm in self.feedingTerms:
                 metab_contribution = fterm.intrinsicGrowth(metObj)
