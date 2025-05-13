@@ -300,6 +300,10 @@ class Subpopulation:
     def __getIntrGrowth(self):
         def gr(metObj):
             growth = 0
+            #checking if no feeding term then return 0
+            if not self.feedingTerms:
+                return 0
+                
             for fterm in self.feedingTerms:
                 growth += fterm.intrinsicGrowth(metObj)
             
@@ -311,6 +315,9 @@ class Subpopulation:
         def metabolism(metObj):
             
             metabV = np.zeros(metObj.nmets)
+            #added to check the feeding term
+            if not self.feedingTerms:
+                return 0
             
             for fterm in self.feedingTerms:
                 metabV += fterm.intrinsicMetabolism(metObj)
