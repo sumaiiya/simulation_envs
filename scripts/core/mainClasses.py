@@ -385,7 +385,7 @@ class Bacteria:
         for subP in self.subpopulations:
             self.composition[self.subpopulations[subP].state]+=self.subpopulations[subP].count
         return self.composition
-    
+    """
     def growth(self, metObj):
         growth = {subP:0 for subP in self.subpopulations}
         for subP in self.subpopulations:
@@ -402,7 +402,30 @@ class Bacteria:
                 growth[subP] -= pop.count * connection[1](metObj) * connection[2]
                 
         return growth
+    """
     
+    def growth(self, metObj):
+        growth = {subP: 0 for subP in self.subpopulations}
+        for subP in self.subpopulations:
+            pop = self.subpopulations[subP]
+         
+            intrinsic = pop.intrinsicGrowth(metObj)
+            if intrinsic > 0:
+                growth[subP] += intrinsic * pop.pHSensitivity(metObj.pH)
+            
+            for connection in self.connections.get(subP, []):
+                target_subP = connection[0]
+                condition_fn = connection[1]
+                transition_factor = connection[2]
+
+               
+                if condition_fn(metObj) > 0:
+                    transition = pop.count * condition_fn(metObj) * transition_factor
+                    growth[target_subP] += transition
+                    growth[subP] -= transition
+
+        return growth
+
     def metabolism(self, metObj):
         metV = np.zeros(metObj.nmets)
         
@@ -411,12 +434,7 @@ class Bacteria:
             metV+= pop.intrinsicMetabolism(metObj) * pop.pHSensitivity(metObj.pH)#limit uptake by pH
         
         return metV
-        
-            
-        
-
-
-
+       
 
 class Microbiome:
     def __init__(self, bacteria : dict):
