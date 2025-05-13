@@ -332,7 +332,7 @@ class Subpopulation:
             return self.mumax * self.count * growth
         else:
             return 0
-    return gr
+        return gr
 
     def __getIntrMetabolism(self):
         def metabolism(metObj):
