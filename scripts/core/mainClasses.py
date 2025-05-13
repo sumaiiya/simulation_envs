@@ -329,8 +329,8 @@ class Subpopulation:
                 metab_contribution = fterm.intrinsicGrowth(metObj)
                 if metab_contribution > 0:
                     growth += metab_contribution
-        return self.mumax * self.count * growth
-    return gr
+            return self.mumax * self.count * growth
+        return gr
 
     def __getIntrMetabolism(self):
         def metabolism(metObj):
