@@ -345,7 +345,7 @@
                 else:
                     return metabV
             return metabolism
-        """
+    """
 
         @staticmethod
         def gammaD(x, alpha, beta):
@@ -404,7 +404,7 @@
                     
             return growth
        
-        """
+    """
         def growth(self, metObj):
             growth = {subP: 0 for subP in self.subpopulations}
             for subP in self.subpopulations:
