@@ -296,7 +296,7 @@ class Subpopulation:
         
         return pHSensitivity
 
-    """
+
     def __getIntrGrowth(self):
         def gr(metObj):
             growth = 0
@@ -320,7 +320,8 @@ class Subpopulation:
             
             
         return metabolism
-    """   
+
+"""    
     def __getIntrGrowth(self):
         def gr(metObj):
             growth = 0
@@ -344,7 +345,7 @@ class Subpopulation:
             else:
                 return metabV
         return metabolism
-
+"""
 
     @staticmethod
     def gammaD(x, alpha, beta):
@@ -385,7 +386,7 @@ class Bacteria:
         for subP in self.subpopulations:
             self.composition[self.subpopulations[subP].state]+=self.subpopulations[subP].count
         return self.composition
-    """
+  
     def growth(self, metObj):
         growth = {subP:0 for subP in self.subpopulations}
         for subP in self.subpopulations:
@@ -402,8 +403,8 @@ class Bacteria:
                 growth[subP] -= pop.count * connection[1](metObj) * connection[2]
                 
         return growth
+   
     """
-    
     def growth(self, metObj):
         growth = {subP: 0 for subP in self.subpopulations}
         for subP in self.subpopulations:
@@ -425,7 +426,7 @@ class Bacteria:
                     growth[subP] -= transition
 
         return growth
-
+"""
     def metabolism(self, metObj):
         metV = np.zeros(metObj.nmets)
         
