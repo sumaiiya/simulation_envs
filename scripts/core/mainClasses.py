@@ -373,7 +373,7 @@ class Subpopulation:
                 if total_growth <= 0:
                     return np.zeros(metObj.nmets)
                 return self.mumax * self.count * metabV
-            return metabolism
+        return metabolism
 
     @staticmethod
     def gammaD(x, alpha, beta):
