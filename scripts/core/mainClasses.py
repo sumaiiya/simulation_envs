@@ -204,14 +204,14 @@ class FeedingTerm:
         self.monodKs = [metDict[metab][1] for metab in self.metIDs]
         self.intrinsicGrowth = self.__getIntrinsicGrowth()
         self.intrinsicMetabolism = self.__getIntrinsicMetabolism()
-    
+    """
     def __getIntrinsicGrowth(self):
         
         def gr(metObj):
             
             metD = metObj.metD
             
-            g = 0
+            g = 1
           
             
             for i,v in enumerate(self.metIDs):
@@ -235,9 +235,38 @@ class FeedingTerm:
             
         return metab
     
+    """
     
-    
-
+    def __getIntrinsicGrowth(self):
+        def gr(metObj):
+            metD = metObj.metD
+            positive_yields_exist = False
+            for i, v in enumerate(self.metIDs):
+                if self.yields[i] > 0:
+                    positive_yields_exist = True
+                    break   
+            if positive_yields_exist:
+                g = 1
+                for i, v in enumerate(self.metIDs):
+                    if self.yields[i] > 0:
+                        concentration = metD[v].concentration
+                        monod_k = self.monodKs[i]
+                        g *= (concentration / max((concentration + monod_k), 0.0001))
+                        return g
+                    else:
+                        return 0
+        return gr
+        
+        
+    def __getIntrinsicMetabolism(self):
+        def metab(metObj):
+            omega = self.intrinsicGrowth(metObj)
+            if omega <= 0:
+                return np.zeros(len(self.yields))
+            return -omega * np.array(self.yields)
+        return metab
+        
+        
 class Subpopulation:
     def __init__(self, name: str, count: float, species: str, mumax: float, feedingTerms : list, pHopt : float, pHalpha : float, state = 'active', color =  '#cf6f15'):
         '''
@@ -292,7 +321,7 @@ class Subpopulation:
         
         return pHSensitivity
 
-
+    """
     def __getIntrGrowth(self):
         def gr(metObj):
             growth = 0
@@ -316,8 +345,35 @@ class Subpopulation:
             
             
         return metabolism
-
-
+    """
+    def __getIntrGrowth(self):
+        def gr(metObj):
+            growth = 0
+            for fterm in self.feedingTerms:
+                valid_term = False
+                if hasattr(fterm, 'metIDs') and len(fterm.metIDs) > 0:
+                    for i, met_id in enumerate(fterm.metIDs):
+                        if fterm.yields[i] > 0:
+                            valid_term = True
+                            break
+                if valid_term:
+                    growth += fterm.intrinsicGrowth(metObj)
+             return self.mumax * self.count * growth
+        return gr
+        
+    def __getIntrMetabolism(self):
+        def metabolism(metObj):
+            metabV = np.zeros(metObj.nmets)
+            total_growth = 0
+            for fterm in self.feedingTerms:
+                term_growth = fterm.intrinsicGrowth(metObj)
+                total_growth += term_growth
+                if term_growth > 0:
+                    metabV += fterm.intrinsicMetabolism(metObj)
+                if total_growth <= 0:
+                    return np.zeros(metObj.nmets)
+                return self.mumax * self.count * metabV
+            return metabolism
 
     @staticmethod
     def gammaD(x, alpha, beta):
