@@ -367,13 +367,15 @@ class Subpopulation:
             total_growth = 0
             for fterm in self.feedingTerms:
                 term_growth = fterm.intrinsicGrowth(metObj)
-                total_growth += term_growth
                 if term_growth > 0:
                     metabV += fterm.intrinsicMetabolism(metObj)
-                if total_growth <= 0:
-                    return np.zeros(metObj.nmets)
-                return self.mumax * self.count * metabV
+                total_growth += term_growth
+
+            if total_growth <= 0:
+                return np.zeros(metObj.nmets)
+            return self.mumax * self.count * metabV
         return metabolism
+
 
     @staticmethod
     def gammaD(x, alpha, beta):
