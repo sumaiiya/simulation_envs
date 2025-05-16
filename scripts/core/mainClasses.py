@@ -358,7 +358,7 @@ class Subpopulation:
                             break
                 if valid_term:
                     growth += fterm.intrinsicGrowth(metObj)
-             return self.mumax * self.count * growth
+            return self.mumax * self.count * growth
         return gr
         
     def __getIntrMetabolism(self):
