@@ -195,9 +195,7 @@ class FeedingTerm:
         id : str
             DESCRIPTION. name of the functional term
         metDict : dict
-            DESCRIPTION.[metabolite_id]:[yield, monodK]. All the metabolites in this dict will considered AND relationships (thus, multiplied)
-
-        
+            DESCRIPTION.[metabolite_id]:[yield, monodK]. All the metabolites in this dict will considered AND relationships (thus, multiplied) 
         '''
         self.id = id
         self.metIDs = list(metDict.keys())
@@ -213,7 +211,8 @@ class FeedingTerm:
             
             metD = metObj.metD
             
-            g = 1
+            #g = 1
+             g = 0
             
             for i,v in enumerate(self.metIDs):
                 
@@ -231,10 +230,7 @@ class FeedingTerm:
             metD = metObj.metD
             
             omega = self.intrinsicGrowth(metObj)
-            
-            
-            
-            
+ 
             return -omega*np.array(self.yields)
             
         return metab
