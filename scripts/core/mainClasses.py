@@ -211,8 +211,8 @@ class FeedingTerm:
             
             metD = metObj.metD
             
-            #g = 1
-             g = 0
+            g = 0
+          
             
             for i,v in enumerate(self.metIDs):
                 
