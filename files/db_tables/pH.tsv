@@ -1,2 +1,6 @@
-species	parameter	value	min	max
-ki	ki1_mumax	50	0.5	1.2
+acetate	pH
+0.0	    7.0
+1.0	    6.8
+2.0	    6.5
+3.0	    6.3
+4.0	    6.0
