@@ -211,7 +211,7 @@ class FeedingTerm:
             
             metD = metObj.metD
             
-            g = 0
+            g = 1
             for i in self.yields:
                 if i>0:
                     g=1
@@ -240,34 +240,7 @@ class FeedingTerm:
     
     
     
-    # def __getIntrinsicGrowth(self):
-    #     def gr(metObj):
-    #         metD = metObj.metD
-    #         positive_yields_exist = False
-    #         for i, v in enumerate(self.metIDs):
-    #             if self.yields[i] > 0:
-    #                 positive_yields_exist = True
-    #                 break   
-    #         if positive_yields_exist:
-    #             g = 1
-    #             for i, v in enumerate(self.metIDs):
-    #                 if self.yields[i] > 0:
-    #                     concentration = metD[v].concentration
-    #                     monod_k = self.monodKs[i]
-    #                     g *= (concentration / max((concentration + monod_k), 0.0001))
-    #                     return g
-    #                 else:
-    #                     return 0
-    #     return gr
-        
-        
-    # def __getIntrinsicMetabolism(self):
-    #     def metab(metObj):
-    #         omega = self.intrinsicGrowth(metObj)
-    #         if omega <= 0:
-    #             return np.zeros(len(self.yields))
-    #         return -omega * np.array(self.yields)
-    #     return metab
+    
         
         
 class Subpopulation:
