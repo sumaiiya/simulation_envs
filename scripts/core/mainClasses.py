@@ -211,8 +211,11 @@ class FeedingTerm:
             
             metD = metObj.metD
             
-            g = 1
-          
+            g = 0
+            for i in self.yields:
+                if i>0:
+                    g=1
+                    break
             
             for i,v in enumerate(self.metIDs):
                 
